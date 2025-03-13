@@ -11,6 +11,8 @@ import {
 import CustomFormField from "./CustomFormField"
 import { Mail, User } from "lucide-react"
 import { userFormValidation } from "@/lib/validations"
+import SubmitButton from "./SubmitButton"
+import { useState } from "react"
 
 export enum FormfieldType {
     INPUT = 'input',
@@ -23,7 +25,8 @@ export enum FormfieldType {
 }
  
 export function PatientForm() {
-  // 1. Define your form.
+  const [loading, setLoading] = useState(false)
+  
   const form = useForm<z.infer<typeof userFormValidation>>({
     resolver: zodResolver(userFormValidation),
     defaultValues: {
@@ -33,7 +36,6 @@ export function PatientForm() {
     },
   })
  
-  // 2. Define a submit handler.
   function onSubmit(values: z.infer<typeof userFormValidation>) {
     console.log(values)
   }
@@ -67,7 +69,9 @@ export function PatientForm() {
           label= "Telephone"
         />
 
-        <Button type="submit" className="w-full bg-green-500">Commencer</Button>
+        <SubmitButton loading={loading}>
+          Commencer
+        </SubmitButton>
       </form>
     </Form>
   )
