@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const userFormValidation = z.object({
-    fullName: z.string()
+    name: z.string()
         .min(2, {message: "Ce champ doit contenir au moins 2 caractères",})
         .max(50, {message: "Ce champ doit contenir au plus 50 caractères"}),
     email: z.string().email("Email invalide"),

@@ -1,13 +1,18 @@
 {
-    "products": [
-      { "id": 1, "name": "Produit A", "price": 100 },
-      { "id": 2, "name": "Produit B", "price": 150 }
-    ],
-    "users": [
-      { "id": 1, "email": "alice@example.com", "password": "123456", "role": "user" },
-      { "id": 2, "email": "bob@example.com", "password": "azerty", "role": "admin" }
-    ],
-    "_rules": {
-      "products": 640
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "alice@example.com",
+      "phone": "0346225448",
+      "password": "123456"
+    },
+    {
+      "email": "daka@gmail.com",
+      "password": "$2a$10$Pr0a4ZWFv45kDJFjeaFkBuQ9M1qHqjQ3.F5rpAPHMhJP.L4Vj0Unm",
+      "name": "Radaka",
+      "phone": "+261324564578",
+      "id": 2
     }
+  ]
 }

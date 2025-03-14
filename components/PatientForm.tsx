@@ -13,6 +13,8 @@ import { Mail, User } from "lucide-react"
 import { userFormValidation } from "@/lib/validations"
 import SubmitButton from "./SubmitButton"
 import { useState } from "react"
+import { createUser } from "@/actions/patient.actions"
+import { useRouter } from "next/navigation"
 
 export enum FormfieldType {
     INPUT = 'input',
@@ -26,18 +28,34 @@ export enum FormfieldType {
  
 export function PatientForm() {
   const [loading, setLoading] = useState(false)
+  const router = useRouter();
   
   const form = useForm<z.infer<typeof userFormValidation>>({
     resolver: zodResolver(userFormValidation),
     defaultValues: {
-      fullName: "",
+      name: "",
       email: "",
       phone: ""
     },
   })
  
-  function onSubmit(values: z.infer<typeof userFormValidation>) {
-    console.log(values)
+  async function onSubmit({name, email, phone}: z.infer<typeof userFormValidation>) {
+    setLoading(true)
+
+    try {
+      const userData = {name, email, phone}
+
+      const data = await createUser(userData)
+
+      console.log(data);
+
+      if (data) router.push(`/patients/${data.user.id}/register`)
+      setLoading(false)
+    } catch (error) {
+
+      setLoading(false)
+      console.log(error);
+    }
   }
   return (
     <Form {...form}>
@@ -49,7 +67,7 @@ export function PatientForm() {
         <CustomFormField
           control={form.control}
           fieldType={FormfieldType.INPUT}
-          name="fullName"
+          name="name"
           label= "Nom complet"
           placeholder="Rokoto Ben"
           icon= {<User className="ml-2"/>}
