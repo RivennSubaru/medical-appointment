@@ -1,0 +1,13 @@
+{
+    "products": [
+      { "id": 1, "name": "Produit A", "price": 100 },
+      { "id": 2, "name": "Produit B", "price": 150 }
+    ],
+    "users": [
+      { "id": 1, "email": "alice@example.com", "password": "123456", "role": "user" },
+      { "id": 2, "email": "bob@example.com", "password": "azerty", "role": "admin" }
+    ],
+    "_rules": {
+      "products": 640
+    }
+}

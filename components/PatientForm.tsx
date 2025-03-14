@@ -66,7 +66,7 @@ export function PatientForm() {
           control={form.control}
           fieldType={FormfieldType.PHONE_INPUT}
           name="phone"
-          label= "Telephone"
+          label= "Téléphone"
         />
 
         <SubmitButton loading={loading}>
