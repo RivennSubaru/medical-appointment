@@ -13,6 +13,7 @@ import { Control } from 'react-hook-form'
 import { FormfieldType } from './PatientForm'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
+import { DatePicker } from './DatePicker'
 
 
 interface CustomProps {
@@ -26,11 +27,11 @@ interface CustomProps {
     dateFormat?: string,
     showTimeSelect?: boolean,
     children?: React.ReactNode,
-    remderSkeleton?: (field: any) => React.ReactNode,
+    renderSkeleton?: (field: any) => React.ReactNode,
 }
 
 const RenderInput = ({field, props}: {field:any, props: CustomProps}) => {
-    const {fieldType, icon, placeholder } = props
+    const {fieldType, icon, placeholder, renderSkeleton } = props
 
     switch (fieldType) {
         case FormfieldType.INPUT:
@@ -58,6 +59,17 @@ const RenderInput = ({field, props}: {field:any, props: CustomProps}) => {
                     className='input-phone'
                 />
             )
+        case FormfieldType.DATE_PICKER:
+            return (
+                <div className='flex items-center rounded-md border border-dark-500 bg-dark-400'>
+                    <DatePicker field={field} className="date-picker" placeholder='Votre date de naissance'/>
+                </div>
+            )
+        case FormfieldType.SKELETON:
+            return (
+                renderSkeleton ? renderSkeleton(field)
+                : null
+            )
         default:
             break;
     }
@@ -71,7 +83,7 @@ const CustomFormField = (props: CustomProps) => {
             control={control}
             name={name}
             render={({ field }) => (
-                <FormItem className='flex-1'>
+                <FormItem className='flex-1 flex flex-col'>
                     {fieldType !== FormfieldType.CHECKBOX && label && (
                         <FormLabel>{label}</FormLabel>
                     )}

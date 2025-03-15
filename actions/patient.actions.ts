@@ -24,3 +24,16 @@ export const createUser = async (newUser: CreateUserParams) => {
         console.error(error);
     }
 }
+
+export const getSingleUser = async (userId: string) => {
+    try {
+        const res = await fetch(`${baseUrl}/users?id=${userId}`)
+        
+        const users = await res.json()
+
+        return users[0]
+    } catch (error) {
+
+        console.log(error);
+    }
+}

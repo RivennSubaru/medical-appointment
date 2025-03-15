@@ -4,7 +4,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 
-import { Button } from "@/components/ui/button"
 import {
   Form
 } from "@/components/ui/form"
@@ -47,15 +46,13 @@ export function PatientForm() {
 
       const data = await createUser(userData)
 
-      console.log(data);
-
       if (data) router.push(`/patients/${data.user.id}/register`)
-      setLoading(false)
     } catch (error) {
 
-      setLoading(false)
       console.log(error);
     }
+
+    setLoading(false)
   }
   return (
     <Form {...form}>

@@ -13,6 +13,13 @@
       "name": "Radaka",
       "phone": "+261324564578",
       "id": 2
+    },
+    {
+      "email": "andorakoto@gmail.com",
+      "password": "$2a$10$qWy/jKZ583lnlEuMrL7aqedaLgv0XIKDd2gdwWU6PuEv7bhMACACe",
+      "name": "Rakotoarivelo Andoniaina",
+      "phone": "+261345678912",
+      "id": 3
     }
   ]
 }
