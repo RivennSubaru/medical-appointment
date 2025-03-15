@@ -37,7 +37,7 @@ const FileUploade = ({ files, onChange }: FileUploaderProps) => {
             />
             <div className='file-upload_label'>
                 <p className='text-14-regular'>
-                    <span className='text-green-400'>Cliquer pour importer</span> ou drag and drop
+                    <span className='text-green-400'>Cliquer pour importer</span> ou faite glisser ici
                 </p>
                 <p>
                     SVG, PNG, JPG ou GIF(max. 800x400px)
