@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/form"
 import CustomFormField from "./CustomFormField"
 import { Mail, User } from "lucide-react"
-import { userFormValidation } from "@/lib/validations"
+import { PatientFormValidation, userFormValidation } from "@/lib/validations"
 import SubmitButton from "./SubmitButton"
 import { useState } from "react"
 import { createUser } from "@/actions/patient.actions"
@@ -27,8 +27,8 @@ function RegisterForm({ user }: {user: User}) {
   const [loading, setLoading] = useState(false)
   const router = useRouter();
   
-  const form = useForm<z.infer<typeof userFormValidation>>({
-    resolver: zodResolver(userFormValidation),
+  const form = useForm<z.infer<typeof PatientFormValidation>>({
+    resolver: zodResolver(PatientFormValidation),
     defaultValues: {
       name: "",
       email: "",
@@ -36,7 +36,7 @@ function RegisterForm({ user }: {user: User}) {
     },
   })
  
-  async function onSubmit({name, email, phone}: z.infer<typeof userFormValidation>) {
+  async function onSubmit({name, email, phone}: z.infer<typeof PatientFormValidation>) {
     /* setLoading(true)
 
     try {
