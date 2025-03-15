@@ -16,13 +16,14 @@ import { useState } from "react"
 import { createUser } from "@/actions/patient.actions"
 import { useRouter } from "next/navigation"
 import { FormfieldType } from "./PatientForm"
-import { Doctors, GenderOptions } from "@/lib/constant"
+import { Doctors, GenderOptions, IdentificationTypes } from "@/lib/constant"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 import { Label } from "./ui/label"
 import { SelectItem } from "./ui/select"
 import Image from "next/image"
+import FileUploader from "./FileUploader"
 
-export function RegisterForm({ user }: {user: User}) {
+function RegisterForm({ user }: {user: User}) {
   const [loading, setLoading] = useState(false)
   const router = useRouter();
   
@@ -206,24 +207,58 @@ export function RegisterForm({ user }: {user: User}) {
                 placeholder="ex: Ibuprofen 200mg"
             />
         </div>
-        
+
         <div className="flex flex-col gap-6 xl:flex-row">
             <CustomFormField
                 control={form.control}
                 fieldType={FormfieldType.TEXTAREA}
-                name="allergies"
-                label= "Allergies (si vous en avez)"
-                placeholder="ex: noix, Pollen"
+                name="familyMedicalHistory"
+                label= "Antécédents médicaux familiaux (si pertinent)"
+                placeholder="ex: Mère avait un cancer du sein "
             />
 
             <CustomFormField
                 control={form.control}
                 fieldType={FormfieldType.TEXTAREA}
-                name="currentMedication"
-                label= "Médicament actuel"
-                placeholder="ex: Ibuprofen 200mg"
+                name="pastMedicalHistory"
+                label= "Antécédents médicaux"
+                placeholder="ex: Diagnostic de l'asthme à l'enfance "
             />
         </div>
+
+        <section className="space-y-6">
+            <div className="mb-9 space-y-1">
+                <h2 className="sub-header">Identification et vérification</h2>
+            </div>
+        </section>
+
+        <CustomFormField
+            control={form.control}
+            fieldType={FormfieldType.SELECT}
+            name="identificationType"
+            label= "Type d'identification"
+            placeholder="Choisisser un type d'identification"
+        >
+            {IdentificationTypes.map((type) => (
+                <SelectItem key={type} value={type}>
+                    {<div className="flex cursor-pointer items-center gap-2">
+                        {type}
+                    </div>}
+                </SelectItem>
+            ))}
+        </CustomFormField>
+
+        <CustomFormField
+            control={form.control}
+            fieldType={FormfieldType.SKELETON}
+            name="identificationDocument"
+            label= "Copie du documment scanné"
+            renderSkeleton={(field) => (
+                <FormControl>
+                    <FileUploader files={field.value} onChange={field.onChange}/>
+                </FormControl>
+            )}
+        />
 
         <SubmitButton loading={loading}>
           Commencer
