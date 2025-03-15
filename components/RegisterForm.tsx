@@ -189,6 +189,42 @@ export function RegisterForm({ user }: {user: User}) {
             ))}
         </CustomFormField>
 
+        <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+                control={form.control}
+                fieldType={FormfieldType.TEXTAREA}
+                name="allergies"
+                label= "Allergies (si vous en avez)"
+                placeholder="ex: noix, Pollen"
+            />
+
+            <CustomFormField
+                control={form.control}
+                fieldType={FormfieldType.TEXTAREA}
+                name="currentMedication"
+                label= "Médicament actuel"
+                placeholder="ex: Ibuprofen 200mg"
+            />
+        </div>
+        
+        <div className="flex flex-col gap-6 xl:flex-row">
+            <CustomFormField
+                control={form.control}
+                fieldType={FormfieldType.TEXTAREA}
+                name="allergies"
+                label= "Allergies (si vous en avez)"
+                placeholder="ex: noix, Pollen"
+            />
+
+            <CustomFormField
+                control={form.control}
+                fieldType={FormfieldType.TEXTAREA}
+                name="currentMedication"
+                label= "Médicament actuel"
+                placeholder="ex: Ibuprofen 200mg"
+            />
+        </div>
+
         <SubmitButton loading={loading}>
           Commencer
         </SubmitButton>

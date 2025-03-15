@@ -15,6 +15,7 @@ import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { DatePicker } from './DatePicker'
 import { Select, SelectContent, SelectTrigger, SelectValue } from './ui/select'
+import { Textarea } from './ui/textarea'
 
 
 interface CustomProps {
@@ -84,6 +85,17 @@ const RenderInput = ({field, props}: {field:any, props: CustomProps}) => {
                             {props.children}
                         </SelectContent>
                     </Select>
+                </FormControl>
+            )
+        case FormfieldType.TEXTAREA:
+            return (
+                <FormControl>
+                    <Textarea
+                        placeholder={placeholder}
+                        {...field}
+                        className='shad-textArea'
+                        disabled={props.disabled}
+                    />
                 </FormControl>
             )
         default:
