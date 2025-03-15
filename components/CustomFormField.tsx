@@ -13,9 +13,12 @@ import { Control } from 'react-hook-form'
 import { FormfieldType } from './PatientForm'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
-import { DatePicker } from './DatePicker'
 import { Select, SelectContent, SelectTrigger, SelectValue } from './ui/select'
 import { Textarea } from './ui/textarea'
+import DatePicker from "react-datepicker";
+
+import "react-datepicker/dist/react-datepicker.css";
+import { Calendar } from 'lucide-react'
 
 
 interface CustomProps {
@@ -33,7 +36,7 @@ interface CustomProps {
 }
 
 const RenderInput = ({field, props}: {field:any, props: CustomProps}) => {
-    const {fieldType, icon, placeholder, renderSkeleton } = props
+    const {fieldType, icon, placeholder, dateFormat, showTimeSelect, renderSkeleton } = props
 
     switch (fieldType) {
         case FormfieldType.INPUT:
@@ -64,7 +67,17 @@ const RenderInput = ({field, props}: {field:any, props: CustomProps}) => {
         case FormfieldType.DATE_PICKER:
             return (
                 <div className='flex items-center rounded-md border border-dark-500 bg-dark-400'>
-                    <DatePicker field={field} className="date-picker" placeholder='Votre date de naissance'/>
+                    <Calendar className='ml-12'/>
+                    <FormControl>
+                        <DatePicker 
+                            selected={field.value} 
+                            onChange={(date) => field.onChange(date)}
+                            dateFormat={dateFormat ?? "MM/dd/yyyy"}
+                            showTimeSelect={showTimeSelect ?? false}
+                            timeInputLabel='Time:'
+                            wrapperClassName='date-picker'
+                        />
+                    </FormControl>
                 </div>
             )
         case FormfieldType.SKELETON:
