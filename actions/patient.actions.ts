@@ -37,3 +37,30 @@ export const getSingleUser = async (userId: string) => {
         console.log(error);
     }
 }
+
+export const registerPatient = async ({identificationDocument, ...patient}: RegisterUserParams) => {
+    let file
+    try {
+        if (identificationDocument) {
+            file = identificationDocument.get('blobFile')
+            const fileName = identificationDocument.get('fileName')
+
+            console.log('importation du fichier: ', fileName);
+            // importing file logic
+
+            file = `uploads/${fileName}`
+        }
+
+        const res = await fetch(`${baseUrl}/patients`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({file, ...patient}),
+        })
+
+        const newPatient = await res.json()
+
+        return newPatient
+    } catch (error) {
+        console.log(error)
+    }
+}

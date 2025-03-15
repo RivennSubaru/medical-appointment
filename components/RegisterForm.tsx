@@ -13,10 +13,10 @@ import { Mail, User } from "lucide-react"
 import { PatientFormValidation, userFormValidation } from "@/lib/validations"
 import SubmitButton from "./SubmitButton"
 import { useState } from "react"
-import { createUser } from "@/actions/patient.actions"
+import { createUser, registerPatient } from "@/actions/patient.actions"
 import { useRouter } from "next/navigation"
 import { FormfieldType } from "./PatientForm"
-import { Doctors, GenderOptions, IdentificationTypes } from "@/lib/constant"
+import { Doctors, GenderOptions, IdentificationTypes, PatientFormDefaultValues } from "@/lib/constant"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 import { Label } from "./ui/label"
 import { SelectItem } from "./ui/select"
@@ -30,27 +30,47 @@ function RegisterForm({ user }: {user: User}) {
   const form = useForm<z.infer<typeof PatientFormValidation>>({
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
-      name: "",
-      email: "",
-      phone: ""
+        ...PatientFormDefaultValues,
+        name: "",
+        email: "",
+        phone: ""
     },
   })
  
-  async function onSubmit({name, email, phone}: z.infer<typeof PatientFormValidation>) {
-    /* setLoading(true)
+  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
+    setLoading(true)
+
+    let formData;
+
+    if (values.identificationDocument && values.identificationDocument.length > 0) {
+        const blobFile = new Blob([values.identificationDocument[0]], {
+            type: values.identificationDocument[0].type
+        })
+
+        formData = new FormData()
+        formData.append('blobFile', blobFile)
+        formData.append('fileName', values.identificationDocument[0].name)
+    }
 
     try {
-      const userData = {name, email, phone}
+      const patientData = {
+        ...values,
+        userId: user.id,
+        birthDate: new Date(values.birthDate),
+        identificationDocument: formData
+      }
 
-      const data = await createUser(userData)
+      // @ts-ignore
+      const patient = await registerPatient(patientData)
 
-      if (data) router.push(`/patients/${data.user.id}/register`)
+      if (patient) router.push(`/patients/${patient.id}/new-appointment`)
+
     } catch (error) {
 
       console.log(error);
     }
 
-    setLoading(false) */
+    setLoading(false)
   }
   return (
     <Form {...form}>
@@ -156,7 +176,7 @@ function RegisterForm({ user }: {user: User}) {
             <CustomFormField
                 control={form.control}
                 fieldType={FormfieldType.PHONE_INPUT}
-                name="phone"
+                name="emergencyContactNumber"
                 label= "Téléphone contact d'urgence"
             />
         </div>

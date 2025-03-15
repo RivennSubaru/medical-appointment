@@ -21,5 +21,27 @@
       "phone": "+261345678912",
       "id": 3
     }
+  ],
+  "patients": [
+    {
+      "file": "uploads/Ehe Aether.png",
+      "name": "Rakotoarivelo Andoniaina",
+      "email": "andorakoto@gmail.com",
+      "phone": "+261337894545",
+      "birthDate": "2004-03-15T21:25:33.000Z",
+      "gender": "Masculin",
+      "address": "Andrainjato",
+      "occupation": "Programmeur",
+      "emergencyContactName": "Benja",
+      "emergencyContactNumber": "+261337894545",
+      "primaryPhysician": "Evan Peter",
+      "allergies": "noix",
+      "currentMedication": "Ibu",
+      "familyMedicalHistory": "",
+      "pastMedicalHistory": "",
+      "identificationType": "Carte d'étudiant",
+      "userId": 3,
+      "id": 1
+    }
   ]
 }

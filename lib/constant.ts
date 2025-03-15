@@ -39,16 +39,35 @@ export const Doctors = [
     },
   ];
 
+  export const PatientFormDefaultValues = {
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    birthDate: new Date(Date.now()),
+    gender: "Masculin" as Gender,
+    address: "",
+    occupation: "",
+    emergencyContactName: "",
+    emergencyContactNumber: "",
+    primaryPhysician: "",
+    allergies: "",
+    currentMedication: "",
+    familyMedicalHistory: "",
+    pastMedicalHistory: "",
+    identificationType: "Birth Certificate",
+    identificationDocument: []
+  };
+
 export const IdentificationTypes = [
     "Certificat de naissance",
-    "Driver's License",
-    "Medical Insurance Card/Policy",
-    "Military ID Card",
-    "National Identity Card",
+    "Permis de conduire",
+    "Carte d'assurance médicale",
+    "Carte d'identité militaire",
+    "Carte d'identité national",
     "Passport",
-    "Resident Alien Card (Green Card)",
-    "Social Security Card",
-    "State ID Card",
-    "Student ID Card",
-    "Voter ID Card",
+    "Carte de résident étranger (carte verte)",
+    "Carte d'identité d'État",
+    "Carte d'étudiant",
+    "Carte d'électeur",
   ];
