@@ -9,10 +9,14 @@ const Register = async ({ params }: SearchParamProps) => {
 
     return (
         <div className="flex h-screen max-h-screen">
-            <section className="remove-scrollbar container my-auto">
-                <div className="sub-container max-w-[860px] py-10">
+            <section className="remove-scrollbar container">
+                <div className="sub-container max-w-[860px] flex-1 flex-col py-10">
                     <span className="mb-12 h-10 w-fit">Logo</span>
                     <RegisterForm user={user}/>
+
+                    <p className="copyright py-12">
+                        © copyright
+                    </p>
                 </div>
             </section>
 
