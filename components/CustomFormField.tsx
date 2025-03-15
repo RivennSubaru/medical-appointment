@@ -14,6 +14,7 @@ import { FormfieldType } from './PatientForm'
 import 'react-phone-number-input/style.css'
 import PhoneInput from 'react-phone-number-input'
 import { DatePicker } from './DatePicker'
+import { Select, SelectContent, SelectTrigger, SelectValue } from './ui/select'
 
 
 interface CustomProps {
@@ -69,6 +70,21 @@ const RenderInput = ({field, props}: {field:any, props: CustomProps}) => {
             return (
                 renderSkeleton ? renderSkeleton(field)
                 : null
+            )
+        case FormfieldType.SELECT:
+            return (
+                <FormControl>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                            <SelectTrigger className='shad-select-trigger'>
+                                <SelectValue placeholder={placeholder}/>
+                            </SelectTrigger>
+                        </FormControl>
+                        <SelectContent className='shad-select-content'>
+                            {props.children}
+                        </SelectContent>
+                    </Select>
+                </FormControl>
             )
         default:
             break;

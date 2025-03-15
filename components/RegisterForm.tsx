@@ -16,9 +16,11 @@ import { useState } from "react"
 import { createUser } from "@/actions/patient.actions"
 import { useRouter } from "next/navigation"
 import { FormfieldType } from "./PatientForm"
-import { GenderOptions } from "@/lib/constant"
+import { Doctors, GenderOptions } from "@/lib/constant"
 import { RadioGroup, RadioGroupItem } from "./ui/radio-group"
 import { Label } from "./ui/label"
+import { SelectItem } from "./ui/select"
+import Image from "next/image"
 
 export function RegisterForm({ user }: {user: User}) {
   const [loading, setLoading] = useState(false)
@@ -170,7 +172,22 @@ export function RegisterForm({ user }: {user: User}) {
             name="primaryPhysician"
             label= "Médecin de premier secours"
             placeholder="Choisisser un médecin"
-        />
+        >
+            {Doctors.map((doctor) => (
+                <SelectItem key={doctor.name} value={doctor.name}>
+                    <div className="flex cursor-pointer items-center gap-2">
+                        <Image
+                            src={doctor.image}
+                            width={32}
+                            height={32}
+                            alt={doctor.name}
+                            className="rounded-full border border-dark-500"    
+                        />
+                        <p>{doctor.name}</p>
+                    </div>
+                </SelectItem>
+            ))}
+        </CustomFormField>
 
         <SubmitButton loading={loading}>
           Commencer
