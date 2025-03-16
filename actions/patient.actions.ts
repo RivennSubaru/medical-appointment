@@ -5,23 +5,31 @@ export const createUser = async (newUser: CreateUserParams) => {
         const res = await fetch(`${baseUrl}/users`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({...newUser, password: "123456"}),
+            body: JSON.stringify(newUser),
         })
 
-        const data = await res.json()
+        if (!res.ok) {
+            if (res.status === 422) {
+                // L'email existe déjà, récupérer l'utilisateur existant
+                const existingUserRes = await fetch(`${baseUrl}/users?email=${newUser.email}`);
+                
+                if (!existingUserRes.ok) {
+                    throw new Error("Erreur lors de la récupération de l'utilisateur existant");
+                }
 
-        return data
-    } catch (error: any) {
-        if (error && error?.code === 409) {
+                const existingUser = await existingUserRes.json();
+                return existingUser; // Retourne l'utilisateur existant
+            }
 
-            const res = await fetch(`${baseUrl}/users?email=${newUser.email}`)
-
-            const users = await res.json()
-
-            return users[0]
+            throw new Error(`Erreur API: ${res.statusText}`);
         }
 
-        console.error(error);
+        const user = await res.json()
+
+        return user
+    } catch (error: any) {
+        console.error("Erreur lors de la création de l'utilisateur:", error);
+        throw error; // Renvoyer l'erreur pour être gérée ailleurs
     }
 }
 
