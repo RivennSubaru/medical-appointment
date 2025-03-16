@@ -16,3 +16,15 @@ export const createAppointment = async (appointment: CreateAppointmentParams) =>
         console.error(error);
     }
 }
+
+export const getAppointment = async (appointmentId: string) => {
+    try {
+        const res = await fetch(`${baseUrl}/appointments?id=${appointmentId}`)
+
+        const appointment = await res.json()
+
+        return appointment[0]
+    } catch (error) {
+        console.log(error);
+    }
+}
