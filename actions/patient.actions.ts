@@ -11,7 +11,7 @@ export const createUser = async (newUser: CreateUserParams) => {
         if (!res.ok) {
             if (res.status === 422) {
                 // L'email existe déjà, récupérer l'utilisateur existant
-                const existingUserRes = await fetch(`${baseUrl}/users?email=${newUser.email}`);
+                const existingUserRes = await fetch(`${baseUrl}/users/email/${newUser.email}`);
                 
                 if (!existingUserRes.ok) {
                     throw new Error("Erreur lors de la récupération de l'utilisateur existant");
@@ -35,24 +35,23 @@ export const createUser = async (newUser: CreateUserParams) => {
 
 export const getUserById = async (userId: string) => {
     try {
-        const res = await fetch(`${baseUrl}/users?id=${userId}`)
+        const res = await fetch(`${baseUrl}/users/${userId}`)
         
         const users = await res.json()
 
-        return users[0]
+        return users
     } catch (error) {
-
         console.log(error);
     }
 }
 
 export const getPatientByUserId = async (userId: string) => {
     try {
-        const res = await fetch(`${baseUrl}/patients?userId=${userId}`)
+        const res = await fetch(`${baseUrl}/patients/userId/userId=${userId}`)
 
         const patients = await res.json()
 
-        return patients[0]
+        return patients
     } catch (error) {
         console.log(error);
     }
