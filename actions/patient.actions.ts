@@ -33,7 +33,7 @@ export const createUser = async (newUser: CreateUserParams) => {
     }
 }
 
-export const getSingleUser = async (userId: string) => {
+export const getUserById = async (userId: string) => {
     try {
         const res = await fetch(`${baseUrl}/users?id=${userId}`)
         
@@ -46,7 +46,7 @@ export const getSingleUser = async (userId: string) => {
     }
 }
 
-export const getPatient = async (userId: string) => {
+export const getPatientByUserId = async (userId: string) => {
     try {
         const res = await fetch(`${baseUrl}/patients?userId=${userId}`)
 

@@ -1,4 +1,4 @@
-import { getPatient } from "@/actions/patient.actions";
+import { getPatientByUserId } from "@/actions/patient.actions";
 import AppointmentForm from "@/components/AppointmentForm";
 import PatientForm from "@/components/PatientForm";
 import Image from "next/image";
@@ -6,7 +6,7 @@ import Link from "next/link";
 
 export default async function NewAppointment({ params }: SearchParamProps) {
   const {userId} = await params
-  const patient = await getPatient(userId)
+  const patient = await getPatientByUserId(userId)
 
   return (
     <div className="flex h-screen max-h-screen">

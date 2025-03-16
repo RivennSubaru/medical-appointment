@@ -1,11 +1,11 @@
-import { getSingleUser } from '@/actions/patient.actions'
+import { getUserById } from '@/actions/patient.actions'
 import RegisterForm from '@/components/RegisterForm'
 import Image from 'next/image'
 import React from 'react'
 
 const Register = async ({ params }: SearchParamProps) => {
     const { userId } = await params
-    const user = await getSingleUser(userId)
+    const user = await getUserById(userId)
 
     return (
         <div className="flex h-screen max-h-screen">
