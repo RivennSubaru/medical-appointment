@@ -38,6 +38,18 @@ export const getSingleUser = async (userId: string) => {
     }
 }
 
+export const getPatient = async (userId: string) => {
+    try {
+        const res = await fetch(`${baseUrl}/patients?userId=${userId}`)
+
+        const patients = await res.json()
+
+        return patients[0]
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const registerPatient = async ({identificationDocument, ...patient}: RegisterUserParams) => {
     let file
     try {

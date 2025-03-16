@@ -42,3 +42,14 @@ export const PatientFormValidation = z.object({
     identificationType: z.string().optional(),
     identificationDocument: z.custom<File[]>().optional(),
   });
+
+  export const CreateAppointmentSchema = z.object({
+    primaryPhysician: z.string().min(2, "Choisisser au moins un médecin"),
+    schedule: z.coerce.date(),
+    reason: z
+      .string()
+      .min(2, "Raison doit au moins contenir 2 caractères")
+      .max(500, "Raison doit contenir au plus 500 caractères"),
+    note: z.string().optional(),
+    cancellationReason: z.string().optional(),
+  });
