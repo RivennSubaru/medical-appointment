@@ -36,9 +36,9 @@ export function AppointmentForm({userId, patientId, type, appointment, setOpen}:
     defaultValues: {
         primaryPhysician: appointment ? appointment.primaryPhysician : "",
         reason: appointment ? appointment.reason : "",
-        note: appointment ? appointment.note :"",
-        schedule: appointment ? appointment.schedule : new Date(),
-        cancellationReason: appointment ? appointment.cancellationReason! : ""
+        note: appointment?.note || "",
+        schedule: appointment ? appointment.schedule : new Date(Date.now()),
+        cancellationReason: appointment?.cancellationReason! || ""
     },
   })
  

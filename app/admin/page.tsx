@@ -21,7 +21,7 @@ const Admin = async() => {
         "reason": "Dent",
         "note": "Dokotera vehivavy s'il vous plait",
         "schedule": "2025-03-04T00:50:01.000Z",
-        "status": "en attente",
+        "status": "annulé",
         "id": 1
       },
       {
