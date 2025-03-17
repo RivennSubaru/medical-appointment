@@ -1,7 +1,7 @@
 {
   "users": [
     {
-      "id": 1,
+      "id": "1",
       "name": "John Doe",
       "email": "alice@example.com",
       "phone": "0346225448",
@@ -12,14 +12,14 @@
       "password": "$2a$10$Pr0a4ZWFv45kDJFjeaFkBuQ9M1qHqjQ3.F5rpAPHMhJP.L4Vj0Unm",
       "name": "Radaka",
       "phone": "+261324564578",
-      "id": 2
+      "id": "2"
     },
     {
       "email": "andorakoto@gmail.com",
       "password": "$2a$10$qWy/jKZ583lnlEuMrL7aqedaLgv0XIKDd2gdwWU6PuEv7bhMACACe",
       "name": "Rakotoarivelo Andoniaina",
       "phone": "+261345678912",
-      "id": 3
+      "id": "3"
     }
   ],
   "patients": [
@@ -41,31 +41,33 @@
       "pastMedicalHistory": "",
       "identificationType": "Carte d'étudiant",
       "userId": 3,
-      "id": 1
+      "id": "1"
     }
   ],
   "appointments": [
     {
-      "userId": "3",
       "patient": 1,
-      "name":"Rakotoarivelo Andoniaina",
-      "primaryPhysician": "David Livingston",
-      "reason": "houh",
-      "note": "nmv",
+      "name": "Rakotoarivelo Andoniaina",
+      "userId": "3",
       "schedule": "2025-03-04T00:50:01.000Z",
-      "status": "en attente",
-      "id": 1
+      "status": "programmé",
+      "primaryPhysician": "Jane Powell",
+      "reason": "Marary nify",
+      "note": "Atavu sipa le radoko please",
+      "cancellationReason": "",
+      "id": "1"
     },
     {
-      "userId": "3",
       "patient": 1,
-      "name":"Rakotoarivelo Andoniaina",
-      "primaryPhysician": "Leila Cameron",
-      "reason": "srdyr",
-      "note": "jhug",
+      "name": "Rakotoarivelo Andoniaina",
+      "userId": "3",
       "schedule": "2025-03-16T00:55:30.288Z",
-      "status": "en attente",
-      "id": 2
+      "status": "annulé",
+      "primaryPhysician": "Leila Cameron",
+      "reason": "Marary kobo",
+      "note": "Sipa koa azafady",
+      "cancellationReason": "Non",
+      "id": "2"
     }
   ]
 }

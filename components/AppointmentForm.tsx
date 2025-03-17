@@ -38,7 +38,7 @@ export function AppointmentForm({userId, patientId, type, appointment, setOpen}:
         reason: appointment ? appointment.reason : "",
         note: appointment?.note || "",
         schedule: appointment ? appointment.schedule : new Date(Date.now()),
-        cancellationReason: appointment?.cancellationReason! || ""
+        cancellationReason: appointment?.cancellationReason || ""
     },
   })
  
@@ -82,9 +82,14 @@ export function AppointmentForm({userId, patientId, type, appointment, setOpen}:
             userId,
             appointmentId: appointment?.id!,
             appointment: {
-                primaryPhisician: values?.primaryPhysician,
+                patient: patientId,
+                name: "Rakotoarivelo Andoniaina",
+                userId,
                 schedule: new Date(values?.schedule),
                 status: status as Status,
+                primaryPhysician: values?.primaryPhysician,
+                reason: values?.reason,
+                note: values?.note,
                 cancellationReason: values?.cancellationReason
             },
             type

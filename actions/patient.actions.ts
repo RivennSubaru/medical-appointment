@@ -11,7 +11,7 @@ export const createUser = async (newUser: CreateUserParams) => {
         if (!res.ok) {
             if (res.status === 422) {
                 // L'email existe déjà, récupérer l'utilisateur existant
-                const existingUserRes = await fetch(`${baseUrl}/users?email=${newUser.email}`);
+                const existingUserRes = await fetch(`${baseUrl}/users/email/${newUser.email}`);
                 
                 if (!existingUserRes.ok) {
                     throw new Error("Erreur lors de la récupération de l'utilisateur existant");

@@ -69,7 +69,7 @@ const RenderInput = ({field, props}: {field:any, props: CustomProps}) => {
                 <div className='flex items-center rounded-md border border-dark-500 bg-dark-400'>
                     <Calendar className='ml-12'/>
                     <FormControl>
-                        <DatePicker 
+                        <DatePicker
                             selected={field.value} 
                             onChange={(date) => field.onChange(date)}
                             dateFormat={dateFormat ?? "MM/dd/yyyy"}

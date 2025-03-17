@@ -73,7 +73,7 @@ export const getRecentAppointmentList = async () => {
 
 export const updateAppointment = async ({ appointmentId, userId, appointment, type }: UpdateAppointmentParams) => {
     try {
-        const res = await fetch(`${baseUrl}/appointment/${appointmentId}`, {
+        const res = await fetch(`${baseUrl}/appointments/${appointmentId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(appointment),
@@ -82,11 +82,14 @@ export const updateAppointment = async ({ appointmentId, userId, appointment, ty
         // TODO SMS notification
 
         revalidatePath('/admin')
-        return parseStringify(updateAppointment)
+        const updatedAppointment = await res.json();
+
+        return parseStringify(updatedAppointment)
+        
 
         /* console.log({ appointmentId, userId, appointment, type }); */
         
     } catch (error) {
-        
+        console.log(error);
     }
 }
