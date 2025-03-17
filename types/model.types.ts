@@ -19,7 +19,9 @@ export interface Patient {
 }
 
 export interface Appointment {
-  patient: Patient;
+  id: string;
+  patient: string;
+  name: string;
   schedule: Date;
   status: Status;
   primaryPhysician: string;

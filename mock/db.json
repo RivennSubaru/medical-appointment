@@ -43,5 +43,29 @@
       "userId": 3,
       "id": 1
     }
+  ],
+  "appointments": [
+    {
+      "userId": "3",
+      "patient": 1,
+      "name":"Rakotoarivelo Andoniaina",
+      "primaryPhysician": "David Livingston",
+      "reason": "houh",
+      "note": "nmv",
+      "schedule": "2025-03-04T00:50:01.000Z",
+      "status": "en attente",
+      "id": 1
+    },
+    {
+      "userId": "3",
+      "patient": 1,
+      "name":"Rakotoarivelo Andoniaina",
+      "primaryPhysician": "Leila Cameron",
+      "reason": "srdyr",
+      "note": "jhug",
+      "schedule": "2025-03-16T00:55:30.288Z",
+      "status": "en attente",
+      "id": 2
+    }
   ]
 }
