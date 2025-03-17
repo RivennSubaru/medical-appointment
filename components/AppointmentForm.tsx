@@ -18,20 +18,27 @@ import { FormfieldType } from "./PatientForm"
 import { baseUrl, Doctors } from "@/lib/constant"
 import { SelectItem } from "./ui/select"
 import Image from "next/image"
-import { createAppointment } from "@/actions/appointment.actions"
+import { createAppointment, updateAppointment } from "@/actions/appointment.actions"
+import { Appointment } from "@/types/model.types"
  
-export function AppointmentForm({userId, patientId, type}: {userId: string, patientId: string, type: "cancel" | "schedule" | "create"}) {
+export function AppointmentForm({userId, patientId, type, appointment, setOpen}: {
+    userId: string, 
+    patientId: string, 
+    type: "cancel" | "schedule" | "create",
+    appointment?: Appointment,
+    setOpen: (open: boolean) => void
+}) {
   const [loading, setLoading] = useState(false)
   const router = useRouter();
   
   const form = useForm<z.infer<typeof CreateAppointmentSchema>>({
     resolver: zodResolver(CreateAppointmentSchema),
     defaultValues: {
-        primaryPhysician: "",
-        reason: "",
-        note: "",
-        schedule: new Date(),
-        cancellationReason: ""
+        primaryPhysician: appointment ? appointment.primaryPhysician : "",
+        reason: appointment ? appointment.reason : "",
+        note: appointment ? appointment.note :"",
+        schedule: appointment ? appointment.schedule : new Date(),
+        cancellationReason: appointment ? appointment.cancellationReason! : ""
     },
   })
  
@@ -70,6 +77,25 @@ export function AppointmentForm({userId, patientId, type}: {userId: string, pati
             form.reset()
             router.push(`/patients/${userId}/new-appointment/success?appointmentId=${appointment.id}`)
         }
+      } else {
+        const appointmentToUpdate = {
+            userId,
+            appointmentId: appointment?.id!,
+            appointment: {
+                primaryPhisician: values?.primaryPhysician,
+                schedule: new Date(values?.schedule),
+                status: status as Status,
+                cancellationReason: values?.cancellationReason
+            },
+            type
+        }
+
+        const updatedAppointment = await updateAppointment(appointmentToUpdate);
+
+        if(updatedAppointment) {
+            setOpen && setOpen(false);
+            form.reset()
+        }
       }
     } catch (error) {
 
@@ -99,10 +125,12 @@ export function AppointmentForm({userId, patientId, type}: {userId: string, pati
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="form-1 space-y-8">
-        <section className="mb-12 space-y-4">
-            <h1 className="header">Nouveau rendez-vous</h1>
-            <span className="text-dark-700">Demander un rendez-vous en 10 secondes</span>
-        </section>
+        {type === "create" && (
+            <section className="mb-12 space-y-4">
+                <h1 className="header">Nouveau rendez-vous</h1>
+                <span className="text-dark-700">Demander un rendez-vous en 10 secondes</span>
+            </section>
+        )}
         
         {type !== "cancel" && (
             <>
@@ -110,7 +138,7 @@ export function AppointmentForm({userId, patientId, type}: {userId: string, pati
                     control={form.control}
                     fieldType={FormfieldType.SELECT}
                     name="primaryPhysician"
-                    label= "Médecin de premier secours"
+                    label= "Médecin"
                     placeholder="Choisisser un médecin"
                 >
                     {Doctors.map((doctor) => (
@@ -142,7 +170,7 @@ export function AppointmentForm({userId, patientId, type}: {userId: string, pati
                         control={form.control}
                         fieldType={FormfieldType.TEXTAREA}
                         name="note"
-                        label= "Note additionel ou description"
+                        label= "Note additionel"
                         placeholder="Après-midi si possible"
                     />
                 </div>
@@ -169,7 +197,7 @@ export function AppointmentForm({userId, patientId, type}: {userId: string, pati
             />
         )}
 
-        <SubmitButton loading={loading} className={`${type === 'cancel' ? "shadcn-danger-btn" : "shad-primary-btn"} w-full`}>
+        <SubmitButton loading={loading} className={`${type === 'cancel' ? "shad-danger-btn" : "shad-primary-btn"} w-full`}>
           {buttonLabel}
         </SubmitButton>
       </form>

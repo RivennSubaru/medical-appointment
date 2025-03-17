@@ -48,6 +48,7 @@
     {
       "userId": "3",
       "patient": 1,
+      "name":"Rakotoarivelo Andoniaina",
       "primaryPhysician": "David Livingston",
       "reason": "houh",
       "note": "nmv",
@@ -58,6 +59,7 @@
     {
       "userId": "3",
       "patient": 1,
+      "name":"Rakotoarivelo Andoniaina",
       "primaryPhysician": "Leila Cameron",
       "reason": "srdyr",
       "note": "jhug",

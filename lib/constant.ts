@@ -71,3 +71,9 @@ export const IdentificationTypes = [
     "Carte d'étudiant",
     "Carte d'électeur",
   ];
+
+  export const StatusIcon = {
+    "programmé": "/assets/icons/check.svg",
+    'en attente': "/assets/icons/pending.svg",
+    'annulé': "/assets/icons/cancelled.svg",
+  };
