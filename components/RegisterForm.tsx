@@ -31,47 +31,54 @@ function RegisterForm({ user }: {user: User}) {
     resolver: zodResolver(PatientFormValidation),
     defaultValues: {
         ...PatientFormDefaultValues,
-        name: "",
-        email: "",
-        phone: ""
+        name: user?.name,
+        email: user?.email,
+        phone: user?.phone
     },
   })
  
-  async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
-    setLoading(true)
+async function onSubmit(values: z.infer<typeof PatientFormValidation>) {
 
-    let formData;
+    const birthDate = new Date(values.birthDate);
+    const formattedDate = birthDate.toISOString().split('T')[0];
+
+    console.log(formattedDate); // Affichera : 2025-03-17
+    setLoading(true);
+
+    const formData = new FormData();
+    formData.append("userId", user.id.toString());
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("phone", values.phone || "");
+    formData.append("birthDate", formattedDate);
+    formData.append("gender", values.gender);
+    formData.append("address", values.address);
+    formData.append("occupation", values.occupation);
+    formData.append("emergencyContactName", values.emergencyContactName);
+    formData.append("emergencyContactNumber", values.emergencyContactNumber);
+    formData.append("primaryPhysician", values.primaryPhysician);
+    formData.append("allergies", values.allergies || "");
+    formData.append("currentMedication", values.currentMedication || "");
+    formData.append("familyMedicalHistory", values.familyMedicalHistory || "");
+    formData.append("pastMedicalHistory", values.pastMedicalHistory || "");
+    formData.append("identificationType", values.identificationType || "");
 
     if (values.identificationDocument && values.identificationDocument.length > 0) {
-        const blobFile = new Blob([values.identificationDocument[0]], {
-            type: values.identificationDocument[0].type
-        })
-
-        formData = new FormData()
-        formData.append('blobFile', blobFile)
-        formData.append('fileName', values.identificationDocument[0].name)
+        formData.append("identificationDocument", values.identificationDocument[0]); // Ajoute le fichier
     }
 
     try {
-      const patientData = {
-        ...values,
-        userId: user.id,
-        birthDate: new Date(values.birthDate),
-        identificationDocument: formData
-      }
+        // @ts-ignore
+        const patient = await registerPatient(formData);
 
-      // @ts-ignore
-      const patient = await registerPatient(patientData)
-
-      if (patient) router.push(`/patients/${patient.id}/new-appointment`)
-
+        if (patient) router.push(`/patients/${user.id}/new-appointment`);
     } catch (error) {
-
-      console.log(error);
+        console.log(error);
     }
 
-    setLoading(false)
-  }
+    setLoading(false);
+}
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="form-1 space-y-12">

@@ -18,7 +18,7 @@ export const createUser = async (newUser: CreateUserParams) => {
                 }
 
                 const existingUser = await existingUserRes.json();
-                return existingUser; // Retourne l'utilisateur existant
+                return {isExist: true, ...existingUser}; // Retourne l'utilisateur existant
             }
 
             throw new Error(`Erreur API: ${res.statusText}`);
@@ -35,52 +35,49 @@ export const createUser = async (newUser: CreateUserParams) => {
 
 export const getUserById = async (userId: string) => {
     try {
-        const res = await fetch(`${baseUrl}/users?id=${userId}`)
+        const res = await fetch(`${baseUrl}/users/${userId}`)
         
         const users = await res.json()
 
-        return users[0]
+        return users
     } catch (error) {
 
         console.log(error);
     }
 }
 
-export const getPatientByUserId = async (userId: string) => {
+export const getPatientByUserId = async (userId: number | string) => {
     try {
-        const res = await fetch(`${baseUrl}/patients?userId=${userId}`)
+        const res = await fetch(`${baseUrl}/patients/userId/${userId}`)
 
         const patients = await res.json()
 
-        return patients[0]
+        return patients
     } catch (error) {
         console.log(error);
     }
 }
 
-export const registerPatient = async ({identificationDocument, ...patient}: RegisterUserParams) => {
-    let file
+export const registerPatient = async (formData: FormData) => {
     try {
-        if (identificationDocument) {
-            file = identificationDocument.get('blobFile')
-            const fileName = identificationDocument.get('fileName')
-
-            console.log('importation du fichier: ', fileName);
-            // importing file logic
-
-            file = `uploads/${fileName}`
-        }
-
         const res = await fetch(`${baseUrl}/patients`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({file, ...patient}),
-        })
+            body: formData,
+            headers: {
+                "Accept": "application/json", // Ne pas mettre "Content-Type"
+            },
+            credentials: "include",
+        });
 
-        const newPatient = await res.json()
+        if (!res.ok) {
+            throw new Error(`Erreur HTTP: ${res.status}`);
+        }
 
-        return newPatient
+        const newPatient = await res.json();
+        console.log(newPatient);
+        
+        return newPatient;
     } catch (error) {
-        console.log(error)
+        console.log(error);
     }
 }

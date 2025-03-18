@@ -22,11 +22,11 @@ import { createAppointment, updateAppointment } from "@/actions/appointment.acti
 import { Appointment } from "@/types/model.types"
  
 export function AppointmentForm({userId, patientId, type, appointment, setOpen}: {
-    userId: string, 
-    patientId: string, 
+    userId: number | string, 
+    patientId: number | string,
     type: "cancel" | "schedule" | "create",
     appointment?: Appointment,
-    setOpen: (open: boolean) => void
+    setOpen?: (open: boolean) => void
 }) {
   const [loading, setLoading] = useState(false)
   const router = useRouter();
@@ -37,7 +37,7 @@ export function AppointmentForm({userId, patientId, type, appointment, setOpen}:
         primaryPhysician: appointment ? appointment.primaryPhysician : "",
         reason: appointment ? appointment.reason : "",
         note: appointment?.note || "",
-        schedule: appointment ? appointment.schedule : new Date(Date.now()),
+        schedule: appointment ? new Date(appointment.schedule) : new Date(Date.now()),
         cancellationReason: appointment?.cancellationReason || ""
     },
   })
@@ -60,48 +60,45 @@ export function AppointmentForm({userId, patientId, type, appointment, setOpen}:
     }
 
     try {
-      if (type === "create" && patientId) {
-        const appointmentData = {
-            userId,
-            patient: patientId,
-            primaryPhysician: values.primaryPhysician,
-            reason: values.reason,
-            note: values.note,
-            schedule: new Date(values.schedule),
-            status: status as Status
-        }
-
-        const appointment = await createAppointment(appointmentData);
-
-        if (appointment) {
-            form.reset()
-            router.push(`/patients/${userId}/new-appointment/success?appointmentId=${appointment.id}`)
-        }
-      } else {
-        const appointmentToUpdate = {
-            userId,
-            appointmentId: appointment?.id!,
-            appointment: {
+        if (type === "create" && patientId) {
+            const appointmentData = {
                 patient: patientId,
-                name: "Rakotoarivelo Andoniaina",
+                primaryPhysician: values.primaryPhysician,
+                reason: values.reason,
+                note: values.note,
+                schedule: new Date(values.schedule).toISOString().slice(0, 19).replace('T', ' '),
+                status: status as Status
+            }
+
+            const appointment = await createAppointment(appointmentData);
+
+            if (appointment) {
+                form.reset()
+                router.push(`/patients/${userId}/new-appointment/success?appointmentId=${appointment.id}`)
+            }
+        } else {
+            const appointmentToUpdate = {
                 userId,
-                schedule: new Date(values?.schedule),
-                status: status as Status,
-                primaryPhysician: values?.primaryPhysician,
-                reason: values?.reason,
-                note: values?.note,
-                cancellationReason: values?.cancellationReason
-            },
-            type
-        }
+                appointmentId: appointment?.id!,
+                appointment: {
+                    patient: patientId,
+                    schedule: new Date(values?.schedule).toISOString().slice(0, 19).replace('T', ' '),
+                    status: status as Status,
+                    primaryPhysician: values?.primaryPhysician,
+                    reason: values?.reason,
+                    note: values?.note,
+                    cancellationReason: values?.cancellationReason
+                },
+                type
+            }
 
-        const updatedAppointment = await updateAppointment(appointmentToUpdate);
+            const updatedAppointment = await updateAppointment(appointmentToUpdate);
 
-        if(updatedAppointment) {
-            setOpen && setOpen(false);
-            form.reset()
+            if(updatedAppointment) {
+                setOpen && setOpen(false);
+                form.reset()
+            }
         }
-      }
     } catch (error) {
 
       console.log(error);

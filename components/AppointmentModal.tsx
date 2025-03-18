@@ -19,8 +19,8 @@ const AppointmentModal = ({
     appointment
 }: { 
     type: "programmer" | "annuler",
-    patientId: string,
-    userId: string,
+    patientId: number | string,
+    userId: number | string,
     appointment?: Appointment
  }) => {
     const [open, setOpen] = useState(false)

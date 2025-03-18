@@ -4,6 +4,7 @@ import { baseUrl } from "@/lib/constant"
 import { parseStringify } from "@/lib/utils"
 import { Appointment } from "@/types/model.types"
 import { revalidatePath } from "next/cache"
+import twilio from 'twilio';
 
 export const createAppointment = async (appointment: CreateAppointmentParams) => {
     try {
@@ -13,8 +14,14 @@ export const createAppointment = async (appointment: CreateAppointmentParams) =>
             body: JSON.stringify(appointment),
         })
 
+        if (!res.ok) {
+            const error = await res.json();
+            throw new Error(error.message || 'An unknown error occured')
+        }
+
         const newAppointment = await res.json()
 
+        console.log(newAppointment);
         return newAppointment
     } catch (error: any) {
 
@@ -22,13 +29,13 @@ export const createAppointment = async (appointment: CreateAppointmentParams) =>
     }
 }
 
-export const getAppointment = async (appointmentId: string) => {
+export const getAppointment = async (appointmentId: number | string) => {
     try {
-        const res = await fetch(`${baseUrl}/appointments?id=${appointmentId}`)
+        const res = await fetch(`${baseUrl}/appointments/${appointmentId}`)
 
         const appointment = await res.json()
 
-        return appointment[0]
+        return appointment
     } catch (error) {
         console.log(error);
     }
@@ -91,5 +98,38 @@ export const updateAppointment = async ({ appointmentId, userId, appointment, ty
         
     } catch (error) {
         console.log(error);
+    }
+}
+
+export const sendSMSNotification = async (content: string) => {
+    const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+
+    try {
+        const message = await client.messages.create({
+            body: content,
+            from: '+18064294548', // Numéro Twilio
+            to: '+261387373260' // Numéro de l'utilisateur
+        });
+        console.log('Message envoyé avec succès:', message.sid);
+    } catch (error: any) {
+        // Gestion des erreurs
+        if (error.code) {
+            console.error(`Erreur Twilio (${error.code}): ${error.message}`);
+            switch (error.code) {
+                case 20003:
+                    console.error("Authentification échouée : vérifiez votre SID et Token.");
+                    break;
+                case 21608:
+                    console.error("Vous essayez peut-être d'envoyer un SMS à un numéro non vérifié.");
+                    break;
+                case 21610:
+                    console.error("Le destinataire a désactivé les messages Twilio.");
+                    break;
+                default:
+                    console.error("Une erreur imprévue est survenue :", error.message);
+            }
+        } else {
+            console.error('Erreur inconnue lors de l\'envoi du SMS:', error);
+        }
     }
 }

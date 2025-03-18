@@ -70,7 +70,7 @@ const RenderInput = ({field, props}: {field:any, props: CustomProps}) => {
                     <Calendar className='ml-12'/>
                     <FormControl>
                         <DatePicker
-                            selected={field.value} 
+                            selected={field.value ? new Date(field.value) : null} 
                             onChange={(date) => field.onChange(date)}
                             dateFormat={dateFormat ?? "MM/dd/yyyy"}
                             showTimeSelect={showTimeSelect ?? false}

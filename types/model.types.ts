@@ -1,5 +1,5 @@
 export interface Patient {
-  userId: string;
+  userId: number;
   name: string;
   email: string;
   phone: string;
@@ -19,14 +19,12 @@ export interface Patient {
 }
 
 export interface Appointment {
-  id: string;
-  patient: string;
-  name: string;
+  id: number | string;
+  patient: Patient | number | string;
   schedule: Date;
   status: Status;
   primaryPhysician: string;
   reason: string;
   note: string;
-  userId: string;
   cancellationReason: string | null;
 }
