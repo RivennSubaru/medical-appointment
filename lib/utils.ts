@@ -12,61 +12,61 @@ export const convertFileToUrl = (file: File) => URL.createObjectURL(file);
 // FORMAT DATE TIME
 export const formatDateTime = (dateString: Date | string) => {
   const dateTimeOptions: Intl.DateTimeFormatOptions = {
-    // weekday: "short", // abbreviated weekday name (e.g., 'Mon')
-    month: "short", // abbreviated month name (e.g., 'Oct')
-    day: "numeric", // numeric day of the month (e.g., '25')
-    year: "numeric", // numeric year (e.g., '2023')
-    hour: "numeric", // numeric hour (e.g., '8')
-    minute: "numeric", // numeric minute (e.g., '30')
-    hour12: true, // use 12-hour clock (true) or 24-hour clock (false)
+    month: "short", // Mois abrégé (ex. 'oct.')
+    day: "numeric", // Jour (ex. '25')
+    year: "numeric", // Année (ex. '2023')
+    hour: "numeric", // Heure (ex. '08')
+    minute: "numeric", // Minute (ex. '30')
+    hour12: false, // Utiliser le format 24h au lieu de 12h
   };
 
   const dateDayOptions: Intl.DateTimeFormatOptions = {
-    weekday: "short", // abbreviated weekday name (e.g., 'Mon')
-    year: "numeric", // numeric year (e.g., '2023')
-    month: "2-digit", // abbreviated month name (e.g., 'Oct')
-    day: "2-digit", // numeric day of the month (e.g., '25')
+    weekday: "short", // Jour abrégé (ex. 'lun.')
+    year: "numeric",
+    month: "2-digit", // Mois sur 2 chiffres (ex. '10' pour octobre)
+    day: "2-digit", // Jour sur 2 chiffres (ex. '25')
   };
 
   const dateOptions: Intl.DateTimeFormatOptions = {
-    month: "short", // abbreviated month name (e.g., 'Oct')
-    year: "numeric", // numeric year (e.g., '2023')
-    day: "numeric", // numeric day of the month (e.g., '25')
+    month: "short",
+    year: "numeric",
+    day: "numeric",
   };
 
   const timeOptions: Intl.DateTimeFormatOptions = {
-    hour: "numeric", // numeric hour (e.g., '8')
-    minute: "numeric", // numeric minute (e.g., '30')
-    hour12: true, // use 12-hour clock (true) or 24-hour clock (false)
+    hour: "numeric",
+    minute: "numeric",
+    hour12: false, // Format 24h
   };
 
   const formattedDateTime: string = new Date(dateString).toLocaleString(
-    "en-US",
+    "fr-FR",
     dateTimeOptions
   );
 
   const formattedDateDay: string = new Date(dateString).toLocaleString(
-    "en-US",
+    "fr-FR",
     dateDayOptions
   );
 
   const formattedDate: string = new Date(dateString).toLocaleString(
-    "en-US",
+    "fr-FR",
     dateOptions
   );
 
   const formattedTime: string = new Date(dateString).toLocaleString(
-    "en-US",
+    "fr-FR",
     timeOptions
   );
 
   return {
-    dateTime: formattedDateTime,
-    dateDay: formattedDateDay,
-    dateOnly: formattedDate,
-    timeOnly: formattedTime,
+    dateTime: formattedDateTime, // Exemple: "25 oct. 2023, 08:30"
+    dateDay: formattedDateDay, // Exemple: "lun. 25/10/2023"
+    dateOnly: formattedDate, // Exemple: "25 oct. 2023"
+    timeOnly: formattedTime, // Exemple: "08:30"
   };
 };
+
 
 export function encryptKey(passkey: string) {
   return btoa(passkey);

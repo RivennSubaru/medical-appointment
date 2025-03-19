@@ -5,7 +5,7 @@ export const userFormValidation = z.object({
         .min(2, {message: "Ce champ doit contenir au moins 2 caractères",})
         .max(50, {message: "Ce champ doit contenir au plus 50 caractères"}),
     email: z.string().email("Email invalide"),
-    phone: z.string().refine((phone) => /^(\+261|0)(20\d{7}|3[2-49]\d{7})$/.test(phone), "Format de numéros de téléphone incorect")
+    phone: z.string().refine((phone) => /^(\+261|0)(20\d{7}|3[2-49]\d{7}|38\d{7})$/.test(phone), "Format de numéros de téléphone incorect")
 })
 
 export const PatientFormValidation = z.object({
@@ -13,7 +13,7 @@ export const PatientFormValidation = z.object({
         .min(2, {message: "Ce champ doit contenir au moins 2 caractères",})
         .max(50, {message: "Ce champ doit contenir au plus 50 caractères"}),
     email: z.string().email("Email invalide"),
-    phone: z.string().refine((phone) => /^(\+261|0)(20\d{7}|3[2-49]\d{7})$/.test(phone), "Format de numéros de téléphone incorect"),
+    phone: z.string().refine((phone) => /^(\+261|0)(20\d{7}|3[2-49]\d{7}|38\d{7})$/.test(phone), "Format de numéros de téléphone incorect"),
     birthDate: z.coerce.date(),
     gender: z.enum(["Masculin", "Féminin", "Autre"]),
     address: z
@@ -31,7 +31,7 @@ export const PatientFormValidation = z.object({
     emergencyContactNumber: z
         .string()
         .refine(
-            (phone) => /^(\+261|0)(20\d{7}|3[2-49]\d{7})$/
+            (phone) => /^(\+261|0)(20\d{7}|3[2-49]\d{7}|38\d{7})$/
             .test(phone), "Format de numéros de téléphone incorect"
         ),
     primaryPhysician: z.string().min(2, "Choisisser au moins un médecin"),

@@ -1,29 +1,33 @@
 {
   "users": [
     {
-      "id": 1,
-      "name": "John Doe",
-      "email": "alice@example.com",
-      "phone": "0346225448",
-      "password": "123456"
+      "id": "1",
+      "name": "Anthony",
+      "email": "anthony@gmail.com",
+      "phone": "+26133405678"
     },
     {
+      "id": "2",
       "email": "daka@gmail.com",
-      "password": "$2a$10$Pr0a4ZWFv45kDJFjeaFkBuQ9M1qHqjQ3.F5rpAPHMhJP.L4Vj0Unm",
       "name": "Radaka",
-      "phone": "+261324564578",
-      "id": 2
+      "phone": "+261324564578"
     },
     {
+      "id": "3",
       "email": "andorakoto@gmail.com",
-      "password": "$2a$10$qWy/jKZ583lnlEuMrL7aqedaLgv0XIKDd2gdwWU6PuEv7bhMACACe",
       "name": "Rakotoarivelo Andoniaina",
-      "phone": "+261345678912",
-      "id": 3
+      "phone": "+261345678912"
+    },
+    {
+      "id": "4",
+      "name": "Giovanni",
+      "email": "giovanni@gmail.com",
+      "phone": "+261334512378"
     }
   ],
   "patients": [
     {
+      "id": "1",
       "file": "uploads/Ehe Aether.png",
       "name": "Rakotoarivelo Andoniaina",
       "email": "andorakoto@gmail.com",
@@ -40,32 +44,65 @@
       "familyMedicalHistory": "",
       "pastMedicalHistory": "",
       "identificationType": "Carte d'étudiant",
-      "userId": 3,
-      "id": 1
+      "userId": 3
+    },
+    {
+      "id": "3674",
+      "file": "uploads/Ehe Aether.png",
+      "name": "Giovanni",
+      "email": "giovanni@gmail.com",
+      "phone": "+261334512378",
+      "birthDate": "2004-03-03T09:54:25.000Z",
+      "gender": "Masculin",
+      "address": "Andrainjato",
+      "occupation": "Programmeur",
+      "emergencyContactName": "Benja",
+      "emergencyContactNumber": "+261334237845",
+      "primaryPhysician": "John Green",
+      "allergies": "Noix",
+      "currentMedication": "Ibuprofen",
+      "familyMedicalHistory": "",
+      "pastMedicalHistory": "",
+      "identificationType": "Permis de conduire",
+      "userId": "4"
     }
   ],
   "appointments": [
     {
-      "userId": "3",
+      "id": "1",
       "patient": 1,
-      "name":"Rakotoarivelo Andoniaina",
-      "primaryPhysician": "David Livingston",
-      "reason": "houh",
-      "note": "nmv",
+      "name": "Rakotoarivelo Andoniaina",
+      "userId": "3",
       "schedule": "2025-03-04T00:50:01.000Z",
-      "status": "en attente",
-      "id": 1
+      "status": "programmé",
+      "primaryPhysician": "Jane Powell",
+      "reason": "Marary nify",
+      "note": "Atavu sipa le radoko please",
+      "cancellationReason": ""
     },
     {
-      "userId": "3",
+      "id": "2",
       "patient": 1,
-      "name":"Rakotoarivelo Andoniaina",
-      "primaryPhysician": "Leila Cameron",
-      "reason": "srdyr",
-      "note": "jhug",
+      "name": "Rakotoarivelo Andoniaina",
+      "userId": "3",
       "schedule": "2025-03-16T00:55:30.288Z",
-      "status": "en attente",
-      "id": 2
+      "status": "annulé",
+      "primaryPhysician": "Leila Cameron",
+      "reason": "Marary kobo",
+      "note": "Sipa koa azafady",
+      "cancellationReason": "Non"
+    },
+    {
+      "patient": "3674",
+      "name": "Rakotoarivelo Andoniaina",
+      "userId": "4",
+      "schedule": "2025-03-07T11:00:00.000Z",
+      "status": "programmé",
+      "primaryPhysician": "Alex Ramirez",
+      "reason": "Analyse de sang",
+      "note": "Mba ataovy bandy nena",
+      "cancellationReason": "",
+      "id": "3d42"
     }
   ]
 }

@@ -10,6 +10,7 @@ import { Doctors } from "@/lib/constant"
 import Image from "next/image"
 import AppointmentModal from "../AppointmentModal"
 import { Appointment } from "@/types/model.types"
+import { useEffect, useMemo, useState } from "react"
 
 
 export const columns: ColumnDef<Appointment>[] = [
@@ -20,7 +21,7 @@ export const columns: ColumnDef<Appointment>[] = [
   {
     accessorKey: "patient",
     header: "Patient",
-    cell: ({row}) => <p>{row.original.name}</p>
+    cell: ({row}) => <p>{row.original.patient.name}</p>
   },
   {
     accessorKey: "status",
@@ -43,9 +44,9 @@ export const columns: ColumnDef<Appointment>[] = [
   {
     accessorKey: "primaryPhysician",
     header: "Doctor",
-    cell: ({row}) => {
-      const doctor = Doctors.find((doc) => doc.name === row.original.primaryPhysician)
-
+    cell: ({ row }) => {
+      const doctor = Doctors.find((doc) => doc.name === row.original.primaryPhysician);
+      
       return (
         <div className="flex items-center gap-3">
           <Image
@@ -56,12 +57,13 @@ export const columns: ColumnDef<Appointment>[] = [
             className="size-8"
           />
           <p className="whitespace-nowrap">
-            Dr. {doctor?.name}
+            Dr. {row.original.primaryPhysician}
           </p>
         </div>
-      )
+      );
     }
-  },
+  }
+  ,
   {
     id: "actions",
     header: () => <div className="pl-4">Actions</div>,
@@ -70,14 +72,14 @@ export const columns: ColumnDef<Appointment>[] = [
         <div className="flex gap-1">
           <AppointmentModal
             type="programmer"
-            patientId={data.patient}
-            userId={data.userId}
+            patientId={data.patient.id}
+            userId={data.patient.userId}
             appointment={data}
           />
           <AppointmentModal
             type="annuler"
-            patientId={data.patient}
-            userId={data.userId}
+            patientId={data.patient.id}
+            userId={data.patient.userId}
             appointment={data}
           />
         </div>

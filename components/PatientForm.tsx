@@ -44,9 +44,15 @@ export function PatientForm() {
     try {
       const userData = {name, email, phone}
 
-      const data = await createUser(userData)
+      const user = await createUser(userData)
 
-      if (data) router.push(`/patients/${data.user.id}/register`)
+      if (user) {
+        if (user.isExist) {
+          router.push(`/patients/${user.id}/new-appointment`)
+        } else {
+          router.push(`/patients/${user.id}/register`)
+        }
+      }
     } catch (error) {
 
       console.log(error);
