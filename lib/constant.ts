@@ -1,4 +1,4 @@
-export const baseUrl = "http://192.168.137.1:8000/api"
+export const baseUrl = "http://192.168.249.113:8000/api"
 export const GenderOptions = ['Masculin', 'Féminin', 'Autre']
 export const Doctors = [
     {

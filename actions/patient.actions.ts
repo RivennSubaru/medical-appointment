@@ -33,13 +33,13 @@ export const createUser = async (newUser: CreateUserParams) => {
     }
 }
 
-export const getUserById = async (userId: string) => {
+export const getUserById = async (userId: string | number) => {
     try {
         const res = await fetch(`${baseUrl}/users/${userId}`)
         
-        const users = await res.json()
+        const user = await res.json()
 
-        return users
+        return user
     } catch (error) {
 
         console.log(error);

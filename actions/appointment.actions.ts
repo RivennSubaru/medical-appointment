@@ -1,10 +1,11 @@
 "use server"
 
 import { baseUrl } from "@/lib/constant"
-import { parseStringify } from "@/lib/utils"
+import { formatDateTime, parseStringify } from "@/lib/utils"
 import { Appointment } from "@/types/model.types"
 import { revalidatePath } from "next/cache"
 import twilio from 'twilio';
+import { getUserById } from "./patient.actions"
 
 export const createAppointment = async (appointment: CreateAppointmentParams) => {
     try {
@@ -21,7 +22,7 @@ export const createAppointment = async (appointment: CreateAppointmentParams) =>
 
         const newAppointment = await res.json()
 
-        console.log(newAppointment);
+        console.log("rendez-vous créé: ",newAppointment);
         return newAppointment
     } catch (error: any) {
 
@@ -85,11 +86,25 @@ export const updateAppointment = async ({ appointmentId, userId, appointment, ty
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(appointment),
         })
+
+        const smsMessage = `
+            Bonjour, c'est Health care.
+            ${type === "schedule"
+                ? `Votre rendez-vous a été programmé pour ${formatDateTime(appointment.schedule!).dateTime} avec le Dr. ${appointment.primaryPhysician}`
+                : `Nous somme navré de vous annoncer que votre rendez-vous a été annulé pour ces raisons spécifiques: ${appointment.cancellationReason}`
+            }
+        `
         
-        // TODO SMS notification
+        if (!res.ok) {
+            const error = await res.json();
+            throw new Error(error.message || 'An unknown error occured')
+        }
+
 
         revalidatePath('/admin')
         const updatedAppointment = await res.json();
+
+        await sendSMSNotification(userId, smsMessage)
 
         return parseStringify(updatedAppointment)
         
@@ -101,16 +116,24 @@ export const updateAppointment = async ({ appointmentId, userId, appointment, ty
     }
 }
 
-export const sendSMSNotification = async (content: string) => {
-    const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
+export const sendSMSNotification = async (userId: string | number, content: string) => {
+    
+    /* const client = twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN); */
+    
 
-    try {
-        const message = await client.messages.create({
+     try {
+        const user = await getUserById(userId);
+
+        console.log("simulation d'envoie de message...");
+        console.log("Chargement...");
+        console.log(`Message envoyé à ${user.name}(${user.phone}), message: `, content);
+
+       /*  const message = await client.messages.create({
             body: content,
             from: '+18064294548', // Numéro Twilio
-            to: '+261387373260' // Numéro de l'utilisateur
+            to: user.phone // Numéro de l'utilisateur
         });
-        console.log('Message envoyé avec succès:', message.sid);
+        console.log('Message envoyé avec succès:', message.sid); */
     } catch (error: any) {
         // Gestion des erreurs
         if (error.code) {
